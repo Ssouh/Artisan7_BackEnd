@@ -1,5 +1,6 @@
 package beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Artisans {
+public class Artisans implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -23,16 +24,22 @@ public class Artisans {
 	
 	private String adresse;
 	
+	private String email;
+
+	private String password;
+	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<Utilisateurs> personne;
 	
 
-	public Artisans(String nom, String prenom, String metier,String adr) {
+	public Artisans(String nom, String prenom, String metier,String adr, String email,String passw) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.setMetier(metier);
 		this.adresse = adr;
+		this.email = email;
+		this.password = passw;
 	}
 	
 	public Artisans() {
@@ -86,6 +93,18 @@ public class Artisans {
 	
 	public void addUtilisateurs(Utilisateurs usr) {
 		this.personne.add(usr);
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
