@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import metier.Facade;
+import metier.FacadeArtisan;
+import metier.FacadeUtilisateur;
 
 /**
  * Servlet implementation class MainServlet
@@ -18,7 +19,8 @@ import metier.Facade;
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private Facade facade;
+	private FacadeArtisan facadeA;
+	private FacadeUtilisateur facadeU;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,15 +34,26 @@ public class MainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String operation = (String) request.getParameter("op");
+		System.out.println(operation);
+		if(request.getParameter("op").equals("liste")) {
+			request.setAttribute("Utilisateurs", facadeU.listeUtilisateurs());
+			request.getRequestDispatcher("liste.jsp").forward(request, response);
+			}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String operation = (String) request.getParameter("op");
+		System.out.println(operation);
+		if(request.getParameter("op").equals("liste")) {
+			request.setAttribute("Utilisateurs", facadeU.listeUtilisateurs());
+			request.getRequestDispatcher("liste.jsp").forward(request, response);
+			}
 	
 	}
+	
 
 }
