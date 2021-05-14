@@ -5,8 +5,8 @@
 	        
 	        <jta-data-source>java:/Artisan7BD</jta-data-source>
 	        
-	        <class>beans.Utilisateurs</class>
-	        <class>beans.Artisans</class>
+	        <class>beans.Utilisateur</class>
+	        <class>beans.Artisan</class>
 	        
 	        <properties>
 	            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />

@@ -11,32 +11,30 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Utilisateurs implements Serializable {
+public class Utilisateur implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String nom;
-	
-	private String prenom;
+	private String name ,phone;
 	
 	private String email;
 	
 	private String password;
 	
 	@OneToMany(fetch = FetchType.EAGER)
-	private List<Artisans> artisans;
+	private List<Artisan> artisans;
 	
 
-	public Utilisateurs(String nom, String prenom, String email, String passw) {
+	public Utilisateur(String nom, String phone, String email, String passw) {
 		super();
-		this.nom = nom;
+		this.name = nom;
+		this.phone = phone;
 		this.setEmail(email);
-		this.prenom = prenom;
 		this.password = passw;
 	}
 	
-	public Utilisateurs() {
+	public Utilisateur() {
 		super();
 	}
 	
@@ -49,27 +47,19 @@ public class Utilisateurs implements Serializable {
 		this.id = id;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String nom) {
+		this.name = nom;
 	}
 
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	public List<Artisans> getArtisans() {
+	public List<Artisan> getArtisans() {
 		return artisans;
 	}
 	
-	public void addArtisans(Artisans adr) {
+	public void addArtisans(Artisan adr) {
 		this.artisans.add(adr);
 	}
 
@@ -83,6 +73,13 @@ public class Utilisateurs implements Serializable {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 		
 }

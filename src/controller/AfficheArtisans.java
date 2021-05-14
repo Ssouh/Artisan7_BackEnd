@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.Artisans;
+import beans.Artisan;
 import metier.FacadeArtisan;
 
 /**
@@ -31,9 +31,9 @@ public class AfficheArtisans extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Artisans> listeArtisans = (ArrayList<Artisans>) facade.listeArtisans();
+		ArrayList<Artisan> listeArtisans = (ArrayList<Artisan>) facade.listeArtisans();
 		
-		JsonElement jsonElem = (new Gson()).toJsonTree(listeArtisans, new TypeToken<ArrayList<Artisans>>() {}.getType());
+		JsonElement jsonElem = (new Gson()).toJsonTree(listeArtisans, new TypeToken<ArrayList<Artisan>>() {}.getType());
 		JsonArray jsonArray = jsonElem.getAsJsonArray();
 		
 		response.setCharacterEncoding("UTF-8");

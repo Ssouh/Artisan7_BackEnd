@@ -18,14 +18,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import beans.Utilisateurs;
+import beans.Artisan;
+import beans.Utilisateur;
 import metier.FacadeArtisan;
 import metier.FacadeUtilisateur;
 
 @Stateless
-@Path("/Utilisateurs")
+@Path("/Utilisateur")
 public class ControllerUtilisateur {
-	private static final long serialVersionUID = 1L;
 	@EJB
 	private FacadeUtilisateur dao;
 
@@ -35,19 +35,32 @@ public class ControllerUtilisateur {
 		return Response.ok(dao.listeUtilisateurs()).build();
 	}
 	
+	@POST
+	@Path("/Ajout")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Utilisateur ajoutArtisan(Utilisateur usr) {
+		return dao.ajoutUtilisateur(usr);
+	}
+
 	@GET
-	@Path("/{id}")
+	@Path("/isValid={id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response show(@PathParam("id") Integer id) {
 		return Response.ok(dao.rechercheUtilisateur(id)).build();
 	}
 	
+	@GET
+	@Path("id={id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response showid(@PathParam("id") Integer id) {
+		return Response.ok(dao.getUtilisatuerById(id)).build();
+	}
 		
 	@DELETE
-	@Path("/{id}")
+	@Path("/supprimer={id}")
 	@TransactionAttribute
 	public Response delete(@PathParam("id") Integer id) {
-		Optional<Utilisateurs> optional = dao.rechercheUtilisateur(id);
+		Optional<Utilisateur> optional = dao.rechercheUtilisateur(id);
 		if (optional.isPresent()) {
 			dao.supprimeUtilisateur(optional.get());
 			return Response.noContent().build();
