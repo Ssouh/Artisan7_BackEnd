@@ -1,8 +1,11 @@
 package metier;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -11,8 +14,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import beans.Artisans;
-import beans.Utilisateurs;
+import beans.Artisan;
+import beans.Utilisateur;
 
 @Stateless
 public class FacadeArtisan {
@@ -20,30 +23,58 @@ public class FacadeArtisan {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void ajoutArtisan(String nom, String prenom, String metier,String adr, String email, String passw) {
-		 em.persist(new Artisans(nom, prenom, metier, adr,email,passw));
+	public Artisan ajoutArtisan(Artisan artisan) {
+		em.persist(artisan);
+		return artisan;
+	}
+	
+	public void ajoutArtisan(String nom, String email,String passw, String phone, String secteur) {
+		 em.persist(new Artisan(nom, email, passw, phone, secteur));
 	}	 
 	 
 	@SuppressWarnings("unchecked")
-	public Collection<Artisans> listeArtisans(){
-		 Query req =  em.createQuery("select a from Artisans a");
+	public Collection<Artisan> listeArtisans(){
+		 Query req =  em.createQuery("select a from Artisan a");
 	     return req.getResultList();
 	}
 	
-	public Optional<Artisans> rechercheArtisan(Integer id) {
-		TypedQuery<Artisans> typedQuery = em.createQuery("SELECT t FROM Artisans t WHERE t.id = :id", Artisans.class).setParameter("id", id);
-		try {
-			Artisans user = typedQuery.getSingleResult();
+	public Optional<Artisan> rechercheArtisan(Integer id) {
+		TypedQuery<Artisan> typedQuery = em.createQuery("select t from Artisan t where t.id = :id", Artisan.class).setParameter("id", id);
+		try {	
+			Artisan user = typedQuery.getSingleResult();
 			return Optional.of(user);
 		} catch (NoResultException e) {
-			java.util.logging.Logger.getLogger(Artisans.class.getName()).info(e.getLocalizedMessage());
+			Logger.getLogger(Artisan.class.getName()).info(e.getLocalizedMessage());
 		}
 		return Optional.empty();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Collection<Artisan> getArtisanById(Integer id)
+	{
+		Query ps = em.createQuery("SELECT t FROM Artisan t WHERE t.id = '"+ id + "'");
+		return ps.getResultList();
+	}
+	
+	
 
-	public void supprimeArtisan(Artisans user) {
+	public void supprimeArtisan(Artisan user) {
 			em.remove(user);
 	}
+	
+	public void addNewArtisan(Artisan artisan)
+	{
+		em.createQuery("INSERT INTO `Artisan` ( `name`, `email`, `password`, `phone`, `secteur`) VALUES ( '"+artisan.getName()+"', '"+artisan.getEmail()+"', '"+artisan.getPassword()+"', '"+artisan.getPhone()+"','"+artisan.getSecteur()+"');");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Collection<Artisan> getArtisanBySecteur(String email)
+	{
+		Query ps = em.createQuery("select * from Artisan where secteur='"+email+"'");
+		return ps.getResultList();
+	}
+
+	
 	
 	 /*public void associer(int personneId, int AddressId) {
 		 Personne p = em.find(Personne.class, personneId);

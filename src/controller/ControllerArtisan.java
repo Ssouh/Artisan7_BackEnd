@@ -3,6 +3,7 @@ package controller;
 import java.util.Optional;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -15,13 +16,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import beans.Artisans;
-import beans.Utilisateurs;
+import beans.Artisan;
+import beans.Utilisateur;
 import metier.FacadeArtisan;
 
-@Path("Artisans")
+@Stateless
+@Path("/Artisan")
 public class ControllerArtisan {
-	private static final long serialVersionUID = 1L;
 	@EJB
 	private FacadeArtisan dao;
 
@@ -30,19 +31,40 @@ public class ControllerArtisan {
 	public Response index() {
 		return Response.ok(dao.listeArtisans()).build();
 	}
+	
+	@POST
+	@Path("/Ajout")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Artisan ajoutArtisan(Artisan artisan) {
+		return dao.ajoutArtisan(artisan);
+	}
 
 	@GET
-	@Path("{id}")
+	@Path("/isValid={id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response show(@PathParam("id") Integer id) {
+	public Response isValid(@PathParam("id") Integer id) {
 		return Response.ok(dao.rechercheArtisan(id)).build();
 	}
 	
+	@GET
+	@Path("id={id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response showid(@PathParam("id") Integer id) {
+		return Response.ok(dao.getArtisanById(id)).build();
+	}
+	
+	@GET
+	@Path("secteur={id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response showsmetier(@PathParam("id") String id) {
+		return Response.ok(dao.getArtisanBySecteur(id)).build();
+	}
+	
 	@DELETE
-	@Path("/{id}")
+	@Path("/supprime={id}")
 	@TransactionAttribute
 	public Response delete(@PathParam("id") Integer id) {
-		Optional<Artisans> optional = dao.rechercheArtisan(id);
+		Optional<Artisan> optional = dao.rechercheArtisan(id);
 		if (optional.isPresent()) {
 			dao.supprimeArtisan(optional.get());
 			return Response.noContent().build();

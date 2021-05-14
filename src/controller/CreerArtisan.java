@@ -32,7 +32,7 @@ public class CreerArtisan extends HttpServlet {
 		String metier = (String) request.getParameter("metier");
 		String adr = (String) request.getParameter("adresse");
 		String passw = (String) request.getParameter("password");
-		facade.ajoutArtisan(nom,prenom,metier, adr ,email,passw);
+		facade.ajoutArtisan(nom,metier, adr ,email,passw);
 	}
 	
 
