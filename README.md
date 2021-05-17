@@ -39,3 +39,24 @@ le site : https://remotemysql.com/phpmyadmin/index.php
 Username : GCDeE5JAfp
 
 password : bu4GkgPGfv
+
+## 4 - Commande pour utilisation en FrontEnd
+```
+REST commande :
+	GET : localhost:8080/Artisan7_BackEnd/Utilisateur == json avec tous les données clients
+	GET : localhost:8080/Artisan7_BackEnd/Artisan == json avec tous les données Artisans
+
+	GET : localhost:8080/Artisan7_BackEnd/Artisan/sectuer=menuisier == json avec tous les données des Artisans menuisier
+
+	GET : localhost:8080/Artisan7_BackEnd/Utilisateur/id=2 == json avec les données clients avec id=2
+	GET : localhost:8080/Artisan7_BackEnd/Artisan/id=2 == json avec les données Artisans avec id=2
+
+	GET : localhost:8080/Artisan7_BackEnd/Utilisateur/isValid=1 == json avec un champ 'présent=true/false' selon l'existance du client 1
+	GET : localhost:8080/Artisan7_BackEnd/Artisan/isValid=1 == json avec  un champ 'présent=true/false' selon l'existance du artisan 1
+
+	POST : localhost:8080/Artisan7_BackEnd/Utilisateur/Ajout == json pour ajouter un client
+	POST : localhost:8080/Artisan7_BackEnd/Artisan/Ajout == json pour ajouter Artisan
+
+	DELETE : localhost:8080/Artisan7_BackEnd/Utilisateur/supprime=3 == supprimer client id=3
+	DELETE : localhost:8080/Artisan7_BackEnd/Artisan/supprime=3 == supprimer Artisan id=3	
+```
