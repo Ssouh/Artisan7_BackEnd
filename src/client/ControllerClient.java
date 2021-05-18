@@ -1,4 +1,4 @@
-package controller;
+package client;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +18,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import beans.Artisan;
-import beans.Utilisateur;
-import metier.FacadeArtisan;
-import metier.FacadeUtilisateur;
+import artisan.Artisan;
+import artisan.FacadeArtisan;
 
 @Stateless
-@Path("/Utilisateur")
-public class ControllerUtilisateur {
+@Path("/Client")
+public class ControllerClient {
 	@EJB
-	private FacadeUtilisateur dao;
+	private FacadeClient dao;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -36,14 +34,14 @@ public class ControllerUtilisateur {
 	}
 	
 	@POST
-	@Path("/Ajout")
+	@Path("/ajout")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Utilisateur ajoutArtisan(Utilisateur usr) {
+	public Client ajoutArtisan(Client usr) {
 		return dao.ajoutUtilisateur(usr);
 	}
 
 	@GET
-	@Path("/isValid={id}")
+	@Path("/estValide={id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response show(@PathParam("id") Integer id) {
 		return Response.ok(dao.rechercheUtilisateur(id)).build();
@@ -57,10 +55,10 @@ public class ControllerUtilisateur {
 	}
 		
 	@DELETE
-	@Path("/supprimer={id}")
+	@Path("/supprime={id}")
 	@TransactionAttribute
 	public Response delete(@PathParam("id") Integer id) {
-		Optional<Utilisateur> optional = dao.rechercheUtilisateur(id);
+		Optional<Client> optional = dao.rechercheUtilisateur(id);
 		if (optional.isPresent()) {
 			dao.supprimeUtilisateur(optional.get());
 			return Response.noContent().build();
