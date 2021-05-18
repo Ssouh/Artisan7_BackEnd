@@ -1,4 +1,4 @@
-package beans;
+package artisan;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import client.Client;
 
 @Entity
 public class Artisan implements Serializable{
@@ -21,7 +23,7 @@ public class Artisan implements Serializable{
 	private String adresse;
 	
 	@OneToMany(fetch = FetchType.EAGER)
-	private List<Utilisateur> personne;
+	private List<Client> personne;
 	
 	
 	public String getSecteur() {
@@ -106,11 +108,11 @@ public class Artisan implements Serializable{
 		this.adresse = adr;
 	}
 		
-	public List<Utilisateur> getUtilisateurs() {
+	public List<Client> getUtilisateurs() {
 		return personne;
 	}
 	
-	public void addUtilisateurs(Utilisateur usr) {
+	public void addUtilisateurs(Client usr) {
 		this.personne.add(usr);
 	}
 

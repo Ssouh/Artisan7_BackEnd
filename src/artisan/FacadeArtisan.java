@@ -1,9 +1,6 @@
-package metier;
+package artisan;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -14,8 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import beans.Artisan;
-import beans.Utilisateur;
+import client.Client;
 
 @Stateless
 public class FacadeArtisan {
@@ -32,6 +28,22 @@ public class FacadeArtisan {
 		 em.persist(new Artisan(nom, email, passw, phone, secteur));
 	}	 
 	 
+
+	@SuppressWarnings("unchecked")
+	public Collection<Artisan> getArtisanById(Integer id)
+	{
+		Query ps = em.createQuery("SELECT t FROM Artisan t WHERE t.id = '"+ id + "'");
+		return ps.getResultList();
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public Collection<Artisan> getArtisanBySecteur(String email)
+	{
+		Query ps = em.createQuery("select * from Artisan where secteur='"+email+"'");
+		return ps.getResultList();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Collection<Artisan> listeArtisans(){
 		 Query req =  em.createQuery("select a from Artisan a");
@@ -49,30 +61,11 @@ public class FacadeArtisan {
 		return Optional.empty();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Collection<Artisan> getArtisanById(Integer id)
-	{
-		Query ps = em.createQuery("SELECT t FROM Artisan t WHERE t.id = '"+ id + "'");
-		return ps.getResultList();
-	}
-	
-	
-
 	public void supprimeArtisan(Artisan user) {
 			em.remove(user);
 	}
 	
-	public void addNewArtisan(Artisan artisan)
-	{
-		em.createQuery("INSERT INTO `Artisan` ( `name`, `email`, `password`, `phone`, `secteur`) VALUES ( '"+artisan.getName()+"', '"+artisan.getEmail()+"', '"+artisan.getPassword()+"', '"+artisan.getPhone()+"','"+artisan.getSecteur()+"');");
-	}
 	
-	@SuppressWarnings("unchecked")
-	public Collection<Artisan> getArtisanBySecteur(String email)
-	{
-		Query ps = em.createQuery("select * from Artisan where secteur='"+email+"'");
-		return ps.getResultList();
-	}
 
 	
 	

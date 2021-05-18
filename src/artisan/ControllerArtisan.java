@@ -1,4 +1,4 @@
-package controller;
+package artisan;
 
 import java.util.Optional;
 
@@ -16,9 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import beans.Artisan;
-import beans.Utilisateur;
-import metier.FacadeArtisan;
+import client.Client;
 
 @Stateless
 @Path("/Artisan")
@@ -33,14 +31,14 @@ public class ControllerArtisan {
 	}
 	
 	@POST
-	@Path("/Ajout")
+	@Path("/ajout")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Artisan ajoutArtisan(Artisan artisan) {
 		return dao.ajoutArtisan(artisan);
 	}
 
 	@GET
-	@Path("/isValid={id}")
+	@Path("/estValide={id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response isValid(@PathParam("id") Integer id) {
 		return Response.ok(dao.rechercheArtisan(id)).build();

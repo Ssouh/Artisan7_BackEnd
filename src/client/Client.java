@@ -1,4 +1,4 @@
-package beans;
+package client;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,8 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import artisan.Artisan;
+
 @Entity
-public class Utilisateur implements Serializable {
+public class Client implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -26,7 +33,7 @@ public class Utilisateur implements Serializable {
 	private List<Artisan> artisans;
 	
 
-	public Utilisateur(String nom, String phone, String email, String passw) {
+	public Client(String nom, String phone, String email, String passw) {
 		super();
 		this.name = nom;
 		this.phone = phone;
@@ -34,7 +41,7 @@ public class Utilisateur implements Serializable {
 		this.password = passw;
 	}
 	
-	public Utilisateur() {
+	public Client() {
 		super();
 	}
 	
