@@ -36,7 +36,17 @@ public class FacadeArtisan {
 		return ps.getResultList();
 	}
 	
-
+	
+	public Artisan getArtisanByEmail(String email) {
+		Query req = em.createQuery("select a from Artisan a where a.email like :e");
+		req.setParameter("e", email);
+		if(req.getResultList().size() == 0)
+		{
+			return null;
+		}
+		return (Artisan) req.getResultList().get(0);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Collection<Artisan> getArtisanBySecteur(String email)
 	{

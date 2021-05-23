@@ -36,6 +36,16 @@ public class FacadeClient {
 		return ps.getResultList();
 	}
 	 
+	public Client getClientByEmail(String email) {
+		Query req = em.createQuery("select a from Client a where a.email like :e");
+		req.setParameter("e", email);
+		if(req.getResultList().size() == 0)
+		{
+			return null;
+		}
+		return (Client) req.getResultList().get(0);
+	}
+	
 	 @SuppressWarnings("unchecked")
 	public Collection<Client> listeUtilisateurs(){
 		 Query req =  em.createQuery("select p from Client p");
