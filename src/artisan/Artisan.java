@@ -1,10 +1,6 @@
 package artisan;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,18 +9,13 @@ import javax.persistence.OneToMany;
 import client.Client;
 
 @Entity
-public class Artisan implements Serializable{
+public class Artisan{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int available;
 	private float note;
 	private String name,email,password,phone,biographie,photo,secteur;
 	private String adresse;
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<Client> personne;
-	
 	
 	public String getSecteur() {
 		return secteur;
@@ -51,12 +42,7 @@ public class Artisan implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getAvailable() {
-		return available;
-	}
-	public void setAvailable(int available) {
-		this.available = available;
-	}
+	
 	public float getNote() {
 		return note;
 	}
@@ -108,12 +94,5 @@ public class Artisan implements Serializable{
 		this.adresse = adr;
 	}
 		
-	public List<Client> getUtilisateurs() {
-		return personne;
-	}
-	
-	public void addUtilisateurs(Client usr) {
-		this.personne.add(usr);
-	}
 
 }

@@ -7,6 +7,8 @@
 	        
 	        <class>client.Client</class>
 	        <class>artisan.Artisan</class>
+	        <class>demande.Demande</class>
+	        <class>devis.Devis</class>
 	        
 	        <properties>
 	            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />
