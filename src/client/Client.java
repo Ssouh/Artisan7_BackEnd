@@ -23,15 +23,10 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String name ,phone;
-	
-	private String email;
+	private String name,email,phone,photo;
 	
 	private String password;
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<Artisan> artisans;
-	
+		
 
 	public Client(String nom, String phone, String email, String passw) {
 		super();
@@ -62,14 +57,6 @@ public class Client implements Serializable {
 		this.name = nom;
 	}
 
-	public List<Artisan> getArtisans() {
-		return artisans;
-	}
-	
-	public void addArtisans(Artisan adr) {
-		this.artisans.add(adr);
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -87,6 +74,14 @@ public class Client implements Serializable {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 		
 }
