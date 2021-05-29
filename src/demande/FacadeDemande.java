@@ -1,17 +1,21 @@
 package demande;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Parameter;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import artisan.Artisan;
+import client.Client;
 
 @Stateless
 public class FacadeDemande {
@@ -19,21 +23,48 @@ public class FacadeDemande {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Demande ajoutDemande(Demande demande) {
+	public Demande ajoutDemande(Demande demande, int id_client) {
+		//Parameter<?> id__client = ((Query) em).getParameter("userId");
+		Client client = em.find(Client.class, id_client);
+		demande.setDemandeur(client);
 		em.persist(demande);
 		return demande;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked" })
 	public Collection<Demande> listeDemandes() {
-		Query req =  em.createQuery("select a from Demande a");
+		Query req =  em.createQuery("select a from Demande a ");
 	    return req.getResultList();
 	}
+	
+	@SuppressWarnings({ "unchecked" })
+	public Collection<Demande> listeDemandes_Encours(int id_client) {
+		ArrayList<Demande> listeDemandes = new ArrayList<Demande>();
+		Client client = em.find(Client.class, id_client);
+		Query req =  em.createQuery("select a from Demande a where a.etat like false");
+	    Collection<Demande> listeDemandeur = req.getResultList();
+	    for (Demande demandeur:listeDemandeur) {
+	    	if (demandeur.getDemandeur().equals(client))
+	    		listeDemandes.add(demandeur);
+	    }
+	    return listeDemandes;
+	}
+	
+	@SuppressWarnings({ "unchecked" })
+	public Collection<Demande> listeDemandes_Finis(int id_client) {
+		ArrayList<Demande> listeDemandes = new ArrayList<Demande>();
+		Client client = em.find(Client.class, id_client);
+		Query req =  em.createQuery("select a from Demande a where a.etat like true");
+	    Collection<Demande> listeDemandeur = req.getResultList();
+	    for (Demande demandeur:listeDemandeur) {
+	    	if (demandeur.getDemandeur().equals(client))
+	    		listeDemandes.add(demandeur);
+	    }
+	    return listeDemandes;
+	}
 
-	@SuppressWarnings("unchecked")
-	public Collection<Demande> getDemandeById(Integer id) {
-		Query ps = em.createQuery("SELECT t FROM Demande t WHERE t.id = '"+ id + "'");
-		return ps.getResultList();
+	public Demande getDemandeById(Integer id) {
+		return em.find(Demande.class,id);
 	}
 
 	@SuppressWarnings("unchecked")
