@@ -25,6 +25,7 @@ public class FacadeClient {
 	}
 	
 	public Client ajoutUtilisateur(Client usr) {
+		//((Query) em).setParameter("userId", usr.getId());
 		em.persist(usr);
 		return usr;
 	}

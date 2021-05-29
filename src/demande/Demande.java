@@ -23,15 +23,19 @@ import javax.persistence.Id;
 enum Etat {en_cours , finis};
 @Entity
 public class Demande implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String titre,description,date_creation,date_realisation,photo,secteur;
 	private String adresse;
 //	private Etat etat;
-	private String etat;
+	private Boolean etat; // 0 pour encours ; 1 pour finis
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	private Client demandeur;
 	
 	@OneToMany(fetch = FetchType.EAGER)
@@ -109,11 +113,11 @@ public class Demande implements Serializable {
 		this.adresse = adresse;
 	}
 
-	public String getEtat() {
+	public Boolean getEtat() {
 		return etat;
 	}
 
-	public void setEtat(String etat) {
+	public void setEtat(Boolean etat) {
 		this.etat = etat;
 	}
 }
