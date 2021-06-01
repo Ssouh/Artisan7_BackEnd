@@ -25,10 +25,17 @@ public class ControllerDevis {
 	private FacadeDevis dao;
 	
 	@POST
-	@Path("/ajout")
+	@Path("/ajout{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Devis ajoutDevis(Devis demande) {
-		return dao.ajoutDevis(demande);
+	public Devis ajoutDevis(@PathParam("id") Integer id,Devis devis) {
+		return dao.ajoutDevis(devis,id);
+	}
+	
+	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response index(@PathParam("id") Integer id) {
+		return Response.ok(dao.listeDemandes_Encours(id)).build();
 	}
 	
 	@GET

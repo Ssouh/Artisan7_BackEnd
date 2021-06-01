@@ -63,6 +63,7 @@ public class ControllerDemande {
 	public Response showid(@PathParam("id") Integer id) {
 		return Response.ok(dao.getDemandeById(id)).build();
 	}
+
 	
 	@GET
 	@Path("secteur={id}")

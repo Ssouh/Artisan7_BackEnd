@@ -6,6 +6,7 @@ import devis.Devis;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,7 @@ public class Demande implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER)
 	private Client demandeur;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER/*,cascade = CascadeType.REMOVE,mappedBy="demande"*/)
 	private List<Devis> listDevis;
 	
 	public Client getDemandeur() {

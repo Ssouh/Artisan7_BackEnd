@@ -3,9 +3,11 @@ package devis;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import artisan.Artisan;
@@ -23,11 +25,13 @@ public class Devis implements Serializable{
 	private double prix;
 	private String titre,description,date;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
+	private Artisan deviseur;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Demande demande;
 	
-	@OneToOne
-	private Artisan deviseur;
+	
 	
 	public Artisan getDeviseur() {
 		return deviseur;

@@ -1,5 +1,6 @@
 package devis;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -11,6 +12,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import artisan.Artisan;
+import client.Client;
 import demande.Demande;
 
 @Stateless
@@ -19,11 +22,27 @@ public class FacadeDevis {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Devis ajoutDevis(Devis devis) {
+	public Devis ajoutDevis(Devis devis, Integer id_artisan) {
+		Artisan artisan = em.find(Artisan.class, id_artisan);
+		devis.setDeviseur(artisan);
 		em.persist(devis);
 		return devis;
 	}
 
+	public Collection<Devis> listeDemandes_Encours(Integer id) {
+		ArrayList<Devis> listeDevis = new ArrayList<Devis>();
+		
+		Artisan artisan = em.find(Artisan.class, id);
+		
+		Query req =  em.createQuery("select a from Devis a");
+	    Collection<Devis> listeDeviseur = req.getResultList();
+	    for (Devis deviseur:listeDeviseur) {
+	    	if (deviseur.getDeviseur().equals(artisan))
+	    		listeDevis.add(deviseur);
+	    }
+	    return listeDevis;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Collection<Devis> listeDevis() {
 		Query req =  em.createQuery("select a from Devis a");
@@ -56,5 +75,6 @@ public class FacadeDevis {
 	public void supprimeDevis(Devis devis) {
 		em.remove(devis);
 	}
+
 	
 }
